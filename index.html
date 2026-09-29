@@ -3,261 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editora Nuvem do Papel - Transforme seu Manuscrito em Obra</title>
+    <title>Editora Nuvem do Papel | Do manuscrito ao livro publicado</title>
     <style>
+        /* CSS RESET & VARIÁVEIS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #2B4C7E;      /* Azul elegante */
+            --primary-dark: #1A3053;
+            --accent: #E07A5F;       /* Laranja/Coral para botões de conversão */
+            --accent-hover: #C85F44;
+            --light-bg: #F8F9FA;
+            --white: #FFFFFF;
+            --text-dark: #2D3142;
+            --text-light: #4F5D75;
+            --whatsapp: #25D366;
+            --whatsapp-hover: #1EBE5D;
+            --border: #E0E0E0;
         }
 
         body {
-            font-family: 'Georgia', serif;
+            color: var(--text-dark);
             line-height: 1.6;
-            color: #333;
+            background-color: var(--white);
         }
 
+        /* NAVEGAÇÃO / HEADER */
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
+            position: sticky;
             top: 0;
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        nav {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            padding: 1rem 2rem;
+            position: relative;
         }
 
         .logo {
             font-size: 1.5rem;
-            font-weight: bold;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
             display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1001;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+        }
+
+        /* MENU HAMBÚRGUER */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Animação do Ícone Hambúrguer para X */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* BOTÕES DE AÇÃO (CTA) */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background-color: var(--whatsapp);
+            color: var(--white);
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
+        .btn-whatsapp:hover {
+            background-color: var(--whatsapp-hover);
+            transform: translateY(-2px);
         }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s;
-            font-size: 1rem;
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
         }
 
-        .nav-links a:hover {
-            opacity: 0.8;
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
         }
 
-        main {
-            margin-top: 70px;
-        }
-
+        /* SEÇÕES GERAIS */
         section {
-            min-height: 100vh;
-            padding: 4rem 2rem;
-            display: none;
-        }
-
-        section.active {
-            display: block;
-        }
-
-        .container {
+            padding: 5rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .hero {
+        .section-title {
             text-align: center;
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-
-        .hero h1 {
-            font-size: 3rem;
+            font-size: 2.2rem;
+            color: var(--primary);
             margin-bottom: 1rem;
-            color: #667eea;
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: #555;
-        }
-
-        .cta-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 50px;
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
             font-size: 1.1rem;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none;
-            display: inline-block;
         }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        /* HERO SECTION (INÍCIO) */
+        .hero-wrapper {
+            background: linear-gradient(135deg, #F0F4F8 0%, #E2E9F0 100%);
         }
 
-        .benefits {
+        .hero {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 5rem 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 2.8rem;
+            color: var(--primary-dark);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* POR QUE PUBLICAR (CONVERSÃO) */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-top: 4rem;
+            margin-top: 2rem;
         }
 
-        .benefit-card {
-            background: white;
+        .feature-card {
+            background: var(--light-bg);
             padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
         }
 
-        .benefit-card:hover {
-            transform: translateY(-5px);
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
         }
 
-        .benefit-card h3 {
-            color: #667eea;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
+        /* SERVIÇOS */
+        .services-wrapper {
+            background-color: var(--light-bg);
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
         }
 
         .service-card {
-            background: white;
+            background: var(--white);
             padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            border-left: 5px solid #667eea;
-            transition: all 0.3s;
-        }
-
-        .service-card:hover {
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            transform: translateX(5px);
-        }
-
-        .service-card h3 {
-            color: #764ba2;
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-        }
-
-        .service-price {
-            color: #667eea;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-top: 1rem;
-        }
-
-        .ebooks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-
-        .ebook-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s;
         }
 
-        .ebook-card:hover {
-            transform: scale(1.05);
+        .service-card:hover {
+            transform: translateY(-5px);
         }
 
-        .ebook-cover {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .service-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        /* PUBLICAÇÕES */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .book-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
+            flex-direction: column;
+            transition: box-shadow 0.3s;
         }
 
-        .ebook-info {
+        .book-card:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            background-color: #EEE;
+        }
+
+        .book-info {
             padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
-        .ebook-info h3 {
-            color: #667eea;
+        .book-title {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .book-author {
+            font-size: 0.95rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .book-synopsis {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* CONTATO */
+        .contact-wrapper {
+            background-color: var(--light-bg);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .whatsapp-box {
+            background-color: #E8F8EF;
+            border: 1px solid #B2E5C8;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .whatsapp-box h3 {
+            color: #116B36;
             margin-bottom: 0.5rem;
         }
 
-        .ebook-author {
-            color: #764ba2;
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-
-        .ebook-description {
-            color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .read-link {
-            display: inline-block;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .read-link:hover {
-            color: #764ba2;
-        }
-
         .contact-form {
-            max-width: 600px;
-            margin: 3rem auto;
-            background: white;
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #667eea;
-            font-weight: bold;
+            font-weight: 500;
         }
 
         .form-group input,
@@ -265,409 +384,316 @@
         .form-group select {
             width: 100%;
             padding: 0.8rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-family: inherit;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
         }
 
         .form-group textarea {
             resize: vertical;
-            min-height: 150px;
+            height: 120px;
         }
 
-        .whatsapp-button {
-            background: #25D366;
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 1rem;
-            text-decoration: none;
-            display: inline-block;
-            transition: background 0.3s;
-        }
-
-        .whatsapp-button:hover {
-            background: #128C7E;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #666;
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-        }
-
+        /* FOOTER */
         footer {
-            background: #2d3748;
-            color: white;
+            background: var(--primary-dark);
+            color: var(--white);
             text-align: center;
             padding: 2rem;
-            margin-top: 4rem;
+            font-size: 0.9rem;
         }
 
+        /* RESPONSIVIDADE & MENU MOBILE */
         @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.9rem;
+            .hamburger {
+                display: flex;
             }
 
-            .hero h1 {
-                font-size: 2rem;
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                gap: 2.5rem;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                transition: right 0.4s ease;
+                z-index: 1000;
             }
 
-            .hero p {
-                font-size: 1.1rem;
+            .nav-menu.active {
+                right: 0;
             }
 
-            .services-grid,
-            .ebooks-grid {
+            .nav-menu a {
+                font-size: 1.2rem;
+            }
+
+            .hero, .contact-container {
                 grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
             }
         }
     </style>
 </head>
 <body>
+
+    <!-- NAVEGAÇÃO -->
     <header>
-        <nav>
-            <div class="logo">📚 Nuvem do Papel</div>
-            <ul class="nav-links">
-                <li><a href="#inicio" onclick="showSection('inicio')">Início</a></li>
-                <li><a href="#servicos" onclick="showSection('servicos')">Serviços</a></li>
-                <li><a href="#ebooks" onclick="showSection('ebooks')">E-books</a></li>
-                <li><a href="#contato" onclick="showSection('contato')">Contato</a></li>
+        <div class="nav-container">
+            <a href="#inicio" class="logo">
+                ☁️ Editora Nuvem do Papel
+            </a>
+
+            <!-- BOTÃO HAMBÚRGUER (EXIBIDO EM TELAS PEQUENAS) -->
+            <button class="hamburger" id="hamburger" aria-label="Abrir Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- MENU DE NAVEGAÇÃO -->
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#inicio" class="nav-link">Início</a></li>
+                <li><a href="#servicos" class="nav-link">Serviços</a></li>
+                <li><a href="#publicacoes" class="nav-link">Publicações</a></li>
+                <li><a href="#contato" class="nav-link">Contato</a></li>
             </ul>
-        </nav>
+        </div>
     </header>
 
-    <main>
-        <!-- INÍCIO -->
-        <section id="inicio" class="active">
-            <div class="hero">
-                <h1>Transforme Seu Manuscrito em uma Obra Profissional</h1>
-                <p>Sua história merece ser contada com excelência. Publique seu e-book com qualidade editorial.</p>
-                <a href="#servicos" onclick="showSection('servicos')" class="cta-button">Conheça Nossos Serviços</a>
+    <!-- PÁGINA 1: INÍCIO (ALTA CONVERSÃO) -->
+    <div id="inicio" class="hero-wrapper">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Transforme sua ideia em um livro de sucesso profissional</h1>
+                <p>Oferecemos suporte editorial completo para autores independentes, acadêmicos e corporativos. Publicar seu e-book ou livro impresso nunca foi tão simples e acessível.</p>
+                <div class="hero-cta">
+                    <a href="#contato" class="btn btn-primary">Quero Publicar Meu Livro</a>
+                    <a href="#servicos" class="btn btn-outline">Conhecer Serviços</a>
+                </div>
             </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=800&q=80" alt="Livro aberto e e-reader em uma mesa moderna">
+            </div>
+        </section>
+    </div>
 
-            <div class="container">
-                <h2 style="text-align: center; margin: 4rem 0 2rem; color: #667eea; font-size: 2rem;">Por que publicar seu livro?</h2>
-                
-                <div class="benefits">
-                    <div class="benefit-card">
-                        <h3>🎯 Alcance Global</h3>
-                        <p>Seu e-book pode ser lido por milhares de pessoas ao redor do mundo. A publicação digital elimina barreiras geográficas e permite que sua mensagem chegue onde você nunca imaginou.</p>
-                    </div>
+    <!-- SEÇÃO DE CONVERSÃO / IMPORTÂNCIA DE PUBLICAR -->
+    <section>
+        <h2 class="section-title">Por que você deve publicar o seu livro hoje?</h2>
+        <p class="section-subtitle">O seu conhecimento e as suas histórias têm o poder de impactar vidas e abrir portas profissionais extraordinárias.</p>
 
-                    <div class="benefit-card">
-                        <h3>💡 Autoridade e Credibilidade</h3>
-                        <p>Publicar um livro estabelece você como referência em seu campo. É um cartão de visitas poderoso que abre portas profissionais e comprova sua expertise.</p>
-                    </div>
+        <div class="features">
+            <div class="feature-card">
+                <h3>🚀 Autoridade Profissional</h3>
+                <p>Tornar-se um autor publicado consolida sua reputação no mercado, posicionando você como uma referência indiscutível em sua área de atuação.</p>
+            </div>
+            <div class="feature-card">
+                <h3>💡 Eternize suas Ideias</h3>
+                <p>Seus pensamentos, pesquisas e histórias não devem ficar esquecidos em uma gaveta. Dê voz ao seu manuscrito e alcance milhares de leitores.</p>
+            </div>
+            <div class="feature-card">
+                <h3>💎 Controle Total e Autonomia</h3>
+                <p>Na Nuvem do Papel, você mantém os direitos autorais sobre a sua obra, com total transparência nos processos e formatos (impresso e digital).</p>
+            </div>
+            <div class="feature-card">
+                <h3>📈 Retorno e Oportunidades</h3>
+                <p>Um livro é o melhor cartão de visitas para atrair novos clientes, palestras, convites acadêmicos e gerar renda com vendas diretas.</p>
+            </div>
+        </div>
+    </section>
 
-                    <div class="benefit-card">
-                        <h3>💰 Renda Passiva</h3>
-                        <p>Um e-book bem produzido pode gerar receita por anos. Trabalhe uma vez e colha os frutos continuamente, transformando seu conhecimento em ativo financeiro.</p>
-                    </div>
+    <!-- PÁGINA 2: SERVIÇOS -->
+    <div id="servicos" class="services-wrapper">
+        <section>
+            <h2 class="section-title">Nossos Serviços Editoriais</h2>
+            <p class="section-subtitle">Acompanhamos você em todas as etapas da cadeia editorial, garantindo padrão de excelência de mercado.</p>
 
-                    <div class="benefit-card">
-                        <h3>🚀 Baixo Investimento</h3>
-                        <p>Diferente da impressão tradicional, publicar e-books requer investimento inicial muito menor. Você pode começar sem estoque, gráfica ou distribuidoras.</p>
-                    </div>
-
-                    <div class="benefit-card">
-                        <h3>📈 Marketing Pessoal</h3>
-                        <p>Seu livro é a melhor ferramenta de marketing pessoal. Ele trabalha 24 horas por dia, divulgando suas ideias e atraindo oportunidades de palestras, consultorias e parcerias.</p>
-                    </div>
-
-                    <div class="benefit-card">
-                        <h3>🎨 Controle Criativo</h3>
-                        <p>Mantenha total controle sobre seu conteúdo, design e estratégia de publicação. Atualize quando quiser e mantenha sua obra sempre relevante e alinhada com sua visão.</p>
-                    </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="service-icon">📝</span>
+                    <h3>Revisão e Edição Textual</h3>
+                    <p>Correção gramatical, ortográfica, adequação de estilo e preparação de texto para garantir clareza, fluidez e coesão à sua leitura.</p>
                 </div>
 
-                <div style="text-align: center; margin-top: 4rem;">
-                    <p style="font-size: 1.3rem; color: #555; margin-bottom: 2rem;">Não deixe seu manuscrito na gaveta. O mundo precisa da sua história!</p>
-                    <a href="#contato" onclick="showSection('contato')" class="cta-button">Fale Conosco Agora</a>
+                <div class="service-card">
+                    <span class="service-icon">🎨</span>
+                    <h3>Design de Capa</h3>
+                    <p>Criação de capas impactantes e personalizadas (frente, lombada e quarta capa), desenvolvidas para capturar a atenção do leitor e transmitir a essência da obra.</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-icon">📐</span>
+                    <h3>Diagramação e Projetos Gráficos</h3>
+                    <p>Editoração interna profissional para livros impressos e digitais, organizando tipografia, margens e elementos visuais de forma harmoniosa.</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-icon">🏷️</span>
+                    <h3>Registro de ISBN e Código de Barras</h3>
+                    <p>Gestão completa do registro legal da sua obra junto à Agência Brasileira do ISBN, garantindo proteção e comercialização oficial.</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-icon">📋</span>
+                    <h3>Ficha Catalográfica</h3>
+                    <p>Elaboração da ficha catalográfica por bibliotecários registrados (CRB), item obrigatório para distribuição comercial e bibliotecas.</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-icon">🖼️</span>
+                    <h3>Ilustrações Personalizadas</h3>
+                    <p>Criação de arte exclusiva sob medida para livros infantis, acadêmicos, didáticos ou obras de ficção.</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-icon">📱</span>
+                    <h3>Conversão de Formatos Digital</h3>
+                    <p>Adaptação do seu livro para os principais formatos digitais do mercado (ePub responsivo, PDF interativo e MOBI/KDP).</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-icon">🤝</span>
+                    <h3>Auxílio na Publicação e Distribuição</h3>
+                    <p>Consultoria técnica para cadastro do livro nas principais plataformas de autopublicação e marketplaces (como Amazon, Kobo e UICLAP).</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-icon">✨</span>
+                    <h3>Ghostwriting e Copidesque</h3>
+                    <p>Apoio na estruturação, reescrita ou desenvolvimento completo de ideias para autores que precisam de apoio na escrita de seus originais.</p>
                 </div>
             </div>
         </section>
+    </div>
 
-        <!-- SERVIÇOS -->
-        <section id="servicos">
-            <div class="container">
-                <h2 class="section-title">Nossos Serviços Editoriais</h2>
-                <p class="section-subtitle">Transformamos seu manuscrito em uma obra profissional, pronta para conquistar leitores</p>
+    <!-- PÁGINA 3: PUBLICAÇÕES -->
+    <section id="publicacoes">
+        <h2 class="section-title">Publicações Recentes</h2>
+        <p class="section-subtitle">Conheça algumas das obras e e-books produzidos e lançados com o selo de qualidade da Nuvem do Papel.</p>
 
-                <div class="services-grid">
-                    <div class="service-card">
-                        <h3>📝 Revisão e Edição</h3>
-                        <p>Correção ortográfica, gramatical e de coesão textual. Nossa equipe de revisores especializados garante que seu texto esteja impecável, preservando seu estilo autoral enquanto corrige erros e aprimora a fluidez da leitura.</p>
-                        <p class="service-price">A partir de R$ 15,00 por lauda</p>
-                    </div>
-
-                    <div class="service-card">
-                        <h3>🎨 Design de Capa</h3>
-                        <p>Capa profissional e atrativa que representa a essência do seu livro. Nossos designers criam capas impactantes que capturam a atenção dos leitores e transmitem visualmente o tema da sua obra.</p>
-                        <p class="service-price">A partir de R$ 300,00</p>
-                    </div>
-
-                    <div class="service-card">
-                        <h3>📐 Diagramação</h3>
-                        <p>Layout profissional para e-books e livros impressos. Formatação adequada de parágrafos, títulos, margens e elementos gráficos para proporcionar uma experiência de leitura confortável e agradável.</p>
-                        <p class="service-price">A partir de R$ 250,00</p>
-                    </div>
-
-                    <div class="service-card">
-                        <h3>🖼️ Ilustrações</h3>
-                        <p>Ilustrações customizadas para enriquecer sua obra. Perfeito para livros infantis, técnicos ou qualquer projeto que necessite de elementos visuais únicos que complementem o texto.</p>
-                        <p class="service-price">Sob consulta</p>
-                    </div>
-
-                    <div class="service-card">
-                        <h3>🔄 Conversão de Formatos</h3>
-                        <p>Adaptação do seu livro para diversos formatos digitais (ePub, MOBI, PDF) e preparação de arquivos para impressão. Garantimos compatibilidade com todas as principais plataformas de distribuição.</p>
-                        <p class="service-price">A partir de R$ 150,00</p>
-                    </div>
-
-                    <div class="service-card">
-                        <h3>🚀 Auxílio na Publicação</h3>
-                        <p>Orientação completa para publicar seu livro nas principais plataformas como Amazon KDP, Google Books e outras. Ajudamos com cadastro, metadados, categorização e estratégias de lançamento.</p>
-                        <p class="service-price">A partir de R$ 200,00</p>
-                    </div>
-
-                    <div class="service-card">
-                        <h3>📖 Registro de ISBN</h3>
-                        <p>Assessoria para obtenção do ISBN (International Standard Book Number), essencial para distribuição profissional e comercialização do seu livro em livrarias e bibliotecas.</p>
-                        <p class="service-price">A partir de R$ 100,00 + taxas</p>
-                    </div>
-
-                    <div class="service-card">
-                        <h3>📣 Consultoria de Marketing</h3>
-                        <p>Estratégias personalizadas para divulgação do seu livro. Orientamos sobre mídias sociais, lançamento, construção de audiência e técnicas para aumentar suas vendas e alcance.</p>
-                        <p class="service-price">A partir de R$ 400,00</p>
-                    </div>
-
-                    <div class="service-card">
-                        <h3>📦 Pacote Completo</h3>
-                        <p>Todos os serviços incluídos para uma publicação totalmente profissional: revisão, edição, capa, diagramação, conversão de formatos e auxílio na publicação. A solução completa para seu livro.</p>
-                        <p class="service-price">A partir de R$ 1.500,00</p>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 4rem;">
-                    <h3 style="color: #667eea; margin-bottom: 1rem;">Pronto para começar?</h3>
-                    <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem;">Entre em contato e receba um orçamento personalizado para seu projeto</p>
-                    <a href="#contato" onclick="showSection('contato')" class="cta-button">Solicitar Orçamento</a>
+        <div class="books-grid">
+            <!-- Livro 1 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80" alt="Capa do livro O Futuro do Digital" class="book-cover">
+                <div class="book-info">
+                    <h3 class="book-title">O Futuro do Digital</h3>
+                    <p class="book-author">Por Clara Mendes</p>
+                    <p class="book-synopsis">Uma análise profunda sobre como as novas tecnologias e a inteligência artificial estão redefinindo as relações humanas e o mercado de trabalho contemporâneo.</p>
+                    <a href="#" class="btn btn-outline" target="_blank" onclick="alert('Download demonstrativo do PDF iniciado!'); return false;">📖 Ler Amostra PDF</a>
                 </div>
             </div>
-        </section>
 
-        <!-- E-BOOKS -->
-        <section id="ebooks">
-            <div class="container">
-                <h2 class="section-title">E-books Publicados</h2>
-                <p class="section-subtitle">Conheça algumas obras que já transformamos em publicações profissionais</p>
-
-                <div class="ebooks-grid">
-                    <div class="ebook-card">
-                        <div class="ebook-cover">
-                            <div>O Caminho<br>do Empreendedor</div>
-                        </div>
-                        <div class="ebook-info">
-                            <h3>O Caminho do Empreendedor</h3>
-                            <p class="ebook-author">por Marina Silva</p>
-                            <p class="ebook-description">Um guia prático sobre como construir um negócio do zero, com estratégias testadas e histórias inspiradoras de quem transformou sonhos em realidade no mercado brasileiro.</p>
-                            <a href="#" class="read-link">Ler Prévia →</a>
-                        </div>
-                    </div>
-
-                    <div class="ebook-card">
-                        <div class="ebook-cover">
-                            <div>Histórias da<br>Floresta Encantada</div>
-                        </div>
-                        <div class="ebook-info">
-                            <h3>Histórias da Floresta Encantada</h3>
-                            <p class="ebook-author">por Carlos Mendes</p>
-                            <p class="ebook-description">Coleção de contos infantis que ensinam valores como amizade, coragem e respeito à natureza através das aventuras de animais mágicos em uma floresta cheia de mistérios.</p>
-                            <a href="#" class="read-link">Ler Prévia →</a>
-                        </div>
-                    </div>
-
-                    <div class="ebook-card">
-                        <div class="ebook-cover">
-                            <div>Mindfulness<br>no Cotidiano</div>
-                        </div>
-                        <div class="ebook-info">
-                            <h3>Mindfulness no Cotidiano</h3>
-                            <p class="ebook-author">por Ana Paula Costa</p>
-                            <p class="ebook-description">Técnicas práticas de atenção plena para reduzir o estresse e aumentar o bem-estar no dia a dia. Um guia acessível para quem busca mais equilíbrio emocional na vida moderna.</p>
-                            <a href="#" class="read-link">Ler Prévia →</a>
-                        </div>
-                    </div>
-
-                    <div class="ebook-card">
-                        <div class="ebook-cover">
-                            <div>Receitas da Vovó:<br>Sabores de Casa</div>
-                        </div>
-                        <div class="ebook-info">
-                            <h3>Receitas da Vovó: Sabores de Casa</h3>
-                            <p class="ebook-author">por Beatriz Oliveira</p>
-                            <p class="ebook-description">Uma coletânea de receitas tradicionais brasileiras transmitidas por gerações, com histórias familiares que temperam cada prato e mantêm vivas nossas tradições culinárias.</p>
-                            <a href="#" class="read-link">Ler Prévia →</a>
-                        </div>
-                    </div>
-
-                    <div class="ebook-card">
-                        <div class="ebook-cover">
-                            <div>Marketing Digital<br>para Iniciantes</div>
-                        </div>
-                        <div class="ebook-info">
-                            <h3>Marketing Digital para Iniciantes</h3>
-                            <p class="ebook-author">por Roberto Alves</p>
-                            <p class="ebook-description">Guia completo sobre estratégias de marketing digital, desde criação de conteúdo até anúncios pagos. Ideal para quem está começando a promover seu negócio online.</p>
-                            <a href="#" class="read-link">Ler Prévia →</a>
-                        </div>
-                    </div>
-
-                    <div class="ebook-card">
-                        <div class="ebook-cover">
-                            <div>Versos do<br>Coração</div>
-                        </div>
-                        <div class="ebook-info">
-                            <h3>Versos do Coração</h3>
-                            <p class="ebook-author">por Juliana Santos</p>
-                            <p class="ebook-description">Coletânea de poesias sobre amor, saudade, esperança e superação. Versos sensíveis que tocam a alma e falam sobre as emoções que todos nós compartilhamos.</p>
-                            <a href="#" class="read-link">Ler Prévia →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 4rem;">
-                    <p style="font-size: 1.2rem; color: #666; margin-bottom: 2rem;">Seu livro pode ser o próximo!</p>
-                    <a href="#servicos" onclick="showSection('servicos')" class="cta-button">Publicar Meu Livro</a>
+            <!-- Livro 2 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80" alt="Capa do livro Horizontes Distantes" class="book-cover">
+                <div class="book-info">
+                    <h3 class="book-title">Horizontes Distantes</h3>
+                    <p class="book-author">Por Roberto A. Silva</p>
+                    <p class="book-synopsis">Um romance cativante que narra a jornada de um jovem navegador em busca de novas rotas no século XVIII. Uma verdadeira ode à coragem e à descoberta.</p>
+                    <a href="#" class="btn btn-outline" target="_blank" onclick="alert('Download demonstrativo do PDF iniciado!'); return false;">📖 Ler Amostra PDF</a>
                 </div>
             </div>
-        </section>
 
-        <!-- CONTATO -->
-        <section id="contato">
-            <div class="container">
-                <h2 class="section-title">Entre em Contato</h2>
-                <p class="section-subtitle">Estamos prontos para transformar seu manuscrito em uma obra profissional</p>
+            <!-- Livro 3 -->
+            <div class="book-card">
+                <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=600&q=80" alt="Capa do livro Guia da Mente Calma" class="book-cover">
+                <div class="book-info">
+                    <h3 class="book-title">Guia da Mente Calma</h3>
+                    <p class="book-author">Por Dra. Juliana Rossi</p>
+                    <p class="book-synopsis">Estratégias práticas de bem-estar, mindfulness e organização pessoal para encontrar o equilíbrio e a paz interior na rotina moderna.</p>
+                    <a href="#" class="btn btn-outline" target="_blank" onclick="alert('Download demonstrativo do PDF iniciado!'); return false;">📖 Ler Amostra PDF</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="nome">Nome Completo *</label>
-                            <input type="text" id="nome" name="nome" required>
-                        </div>
+    <!-- PÁGINA 4: CONTATO -->
+    <div id="contato" class="contact-wrapper">
+        <section>
+            <h2 class="section-title">Entre em Contato</h2>
+            <p class="section-subtitle">Pronto para dar vida ao seu livro? Solicite um orçamento sem compromisso ou tire suas dúvidas conosco.</p>
 
-                        <div class="form-group">
-                            <label for="email">E-mail *</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Atendimento Personalizado</h3>
+                    <p style="margin-top: 1rem; color: var(--text-light);">Nossa equipe de especialistas está à disposição para analisar seu projeto editorial e indicar as melhores soluções para o seu lançamento.</p>
 
-                        <div class="form-group">
-                            <label for="telefone">Telefone/WhatsApp *</label>
-                            <input type="tel" id="telefone" name="telefone" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="servico">Serviço de Interesse</label>
-                            <select id="servico" name="servico">
-                                <option value="">Selecione um serviço</option>
-                                <option value="revisao">Revisão e Edição</option>
-                                <option value="capa">Design de Capa</option>
-                                <option value="diagramacao">Diagramação</option>
-                                <option value="ilustracoes">Ilustrações</option>
-                                <option value="conversao">Conversão de Formatos</option>
-                                <option value="publicacao">Auxílio na Publicação</option>
-                                <option value="pacote">Pacote Completo</option>
-                                <option value="outro">Outro</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="mensagem">Mensagem *</label>
-                            <textarea id="mensagem" name="mensagem" required placeholder="Conte-nos sobre seu projeto, número de páginas, prazo desejado e outras informações relevantes..."></textarea>
-                        </div>
-
-                        <button type="submit" class="cta-button" style="width: 100%;">Enviar Mensagem</button>
-                    </form>
-
-                    <div style="text-align: center; margin-top: 2rem;">
-                        <p style="margin-bottom: 1rem; color: #666;">Prefere falar pelo WhatsApp?</p>
-                        <a href="https://wa.me/5551999999999?text=Olá! Gostaria de saber mais sobre os serviços da Editora Nuvem do Papel." target="_blank" class="whatsapp-button">
-                            💬 Chamar no WhatsApp
+                    <div class="whatsapp-box">
+                        <h3>💬 Fale Conosco pelo WhatsApp</h3>
+                        <p style="margin-bottom: 1.5rem; font-size: 0.95rem;">Atendimento rápido e direto para dúvidas, orçamentos e prazos.</p>
+                        <a href="https://wa.me/5500000000000?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20Editora%20Nuvem%20do%20Papel." target="_blank" class="btn btn-whatsapp">
+                            Iniciar Conversa no WhatsApp
                         </a>
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 3rem; color: #666;">
-                    <p><strong>Horário de Atendimento:</strong></p>
-                    <p>Segunda a Sexta: 9h às 18h</p>
-                    <p>Sábado: 9h às 13h</p>
-                    <p style="margin-top: 1rem;">📧 contato@nuvemdopapel.com.br</p>
-                    <p>📱 (51) 99999-9999</p>
+                <div class="contact-form">
+                    <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" id="nome" required placeholder="Seu nome">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" required placeholder="seuemail@exemplo.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="servico">Serviço de Interesse</label>
+                            <select id="servico">
+                                <option>Projeto Editorial Completo (E-book + Impresso)</option>
+                                <option>Apenas E-book</option>
+                                <option>Revisão e Edição</option>
+                                <option>Design de Capa e Diagramação</option>
+                                <option>Registros (ISBN e Ficha Catalográfica)</option>
+                                <option>Outros</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mensagem">Fale sobre o seu projeto</label>
+                            <textarea id="mensagem" required placeholder="Conte-nos um pouco sobre seu livro (número aproximado de páginas, gênero, prazos desejados...)"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar Mensagem</button>
+                    </form>
                 </div>
             </div>
         </section>
-    </main>
+    </div>
 
+    <!-- RODAPÉ -->
     <footer>
-        <p>&copy; 2025 Editora Nuvem do Papel - Transformando manuscritos em obras profissionais</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Todos os direitos reservados</p>
+        <p>&copy; 2026 Editora Nuvem do Papel. Todos os direitos reservados.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.8;">Transformando ideias em livros inesquecíveis.</p>
     </footer>
 
+    <!-- SCRIPT JAVASCRIPT PARA O MENU HAMBÚRGUER -->
     <script>
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            document.getElementById(sectionId).classList.add('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
 
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const telefone = document.getElementById('telefone').value;
-            const servico = document.getElementById('servico').value;
-            const mensagem = document.getElementById('mensagem').value;
-            
-            alert('Obrigado pelo contato, ' + nome + '! Entraremos em contato em breve.\n\nEnquanto isso, você também pode nos chamar diretamente no WhatsApp.');
-            
-            this.reset();
+        // Alterna abertura/fechamento do menu hambúrguer
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
         });
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                if (targetId) {
-                    showSection(targetId);
-                }
+        // Fecha o menu ao clicar em qualquer item da navegação
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
             });
         });
     </script>
